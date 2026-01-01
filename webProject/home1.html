@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cinema Booking - Home</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <!-- Navigation Bar -->
+  <nav class="bg-gray-900 text-white px-6 py-4 flex items-center justify-between">
+    <div class="text-2xl font-bold text-yellow-400">🎬 Cinema Booking</div>
+    
+    <ul class="flex items-center space-x-6">
+      <li><a href="index.html" class="hover:text-yellow-400">Home</a></li>
+      
+      <!-- Movies Dropdown -->
+      <li class="relative group">
+        <button class="hover:text-yellow-400">Movies ▾</button>
+        <ul class="absolute hidden group-hover:block bg-gray-800 text-white mt-2 rounded shadow-lg">
+          <li><a href="movies.html" class="block px-4 py-2 hover:bg-yellow-500">Sandle-wood</a></li>
+          <li><a href="upcoming.html" class="block px-4 py-2 hover:bg-yellow-500">Bolly-wood</a></li>
+        </ul>
+      </li>
+      
+      <!-- Theaters Dropdown -->
+      <li class="relative group">
+        <button class="hover:text-yellow-400">Theaters ▾</button>
+        <ul class="absolute hidden group-hover:block bg-gray-800 text-white mt-2 rounded shadow-lg">
+          <li><a href="theaters.html" class="block px-4 py-2 hover:bg-yellow-500">S4</a></li>
+          <li><a href="premium.html" class="block px-4 py-2 hover:bg-yellow-500">INOX</a></li>
+          <li><a href="premium.html" class="block px-4 py-2 hover:bg-yellow-500">PVR</a></li>
+          <li><a href="premium.html" class="block px-4 py-2 hover:bg-yellow-500">GLOBAL</a></li>
+        </ul>
+      </li>
+      
+      <li><a href="offers.html" class="hover:text-yellow-400">Offers</a></li>
+      <li><a href="food.html" class="hover:text-yellow-400">Food & Beverages</a></li>
+      <li><a href="contact.html" class="hover:text-yellow-400">Contact</a></li>
+    </ul>
+
+    <!-- Search Bar -->
+    <div>
+      <input type="text" placeholder="Search movies..." 
+             class="px-3 py-1 rounded text-black focus:outline-none">
+      <button class="bg-yellow-400 text-black px-3 py-1 rounded hover:bg-yellow-500">Search</button>
+    </div>
+  </nav>
+
+  <!-- Movie Grid -->
+  <section class="p-8">
+    <h2 class="text-3xl font-bold mb-6 text-gray-800">Featured Movies</h2>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      
+      <!-- Movie Card -->
+      <div onclick="redirectToMovie('movie2.html')" 
+           class="cursor-pointer bg-white rounded shadow hover:scale-105 transform transition">
+        <img src="devil.jpg" alt="Devil" class="w-[284px] h-[414px] object-cover rounded-t mx-auto">
+        <div class="p-2 text-center font-semibold text-gray-700">DEVIL</div>
+      </div>
+
+      <div onclick="redirectToMovie('movie3.html')" 
+           class="cursor-pointer bg-white rounded shadow hover:scale-105 transform transition">
+        <img src="avatar.jpg" alt="Avatar" class="w-[284px] h-[414px] object-cover rounded-t mx-auto">
+        <div class="p-4 text-center font-semibold text-gray-700">AVATAR</div>
+      </div>
+
+      <div onclick="redirectToMovie('movie4.html')" 
+           class="cursor-pointer bg-white rounded shadow hover:scale-105 transform transition">
+        <img src="tim.jpg" alt="Tere Ishq Mein" class="w-[284px] h-[414px] object-cover rounded-t mx-auto">
+        <div class="p-4 text-center font-semibold text-gray-700">TERE ISHQ MEIN</div>
+      </div>
+
+      <div onclick="redirectToMovie('movie5.html')" 
+           class="cursor-pointer bg-white rounded shadow hover:scale-105 transform transition">
+        <img src="zootopia1.jpg" alt="Zootopia" class="w-[284px] h-[414px] object-cover rounded-t mx-auto">
+        <div class="p-4 text-center font-semibold text-gray-700">ZOOTOPIA</div>
+      </div>
+
+
+    </div>
+  </section>
+
+  <!-- JavaScript -->
+  <script>
+    function redirectToMovie(page) {
+      window.location.href = page;
+    }
+  </script>
+
+</body>
+</html>

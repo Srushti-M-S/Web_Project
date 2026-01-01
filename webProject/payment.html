@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <!-- Navigation -->
+  <nav class="bg-gray-900 text-white px-6 py-4 flex items-center justify-between">
+    <div class="text-2xl font-bold text-yellow-400">🎬 Cinema Booking</div>
+    <a href="booking.html" class="hover:text-yellow-400">Back to Seats</a>
+  </nav>
+
+  <!-- Payment Section -->
+  <section id="paymentSection"
+    class="p-8 max-w-3xl mx-auto bg-white rounded shadow mt-6 text-gray-800">
+    <h2 class="text-2xl font-bold mb-6">Payment</h2>
+    <div class="mb-6 space-y-2">
+      <p><span class="font-semibold">Movie:</span> <span id="movieName"></span></p>
+      <p><span class="font-semibold">Seat(s):</span> <span id="seatNumbers"></span></p>
+      <p><span class="font-semibold">Amount:</span> <span id="amountValue"></span></p>
+    </div>
+    <button id="payBtn"
+      class="block text-center bg-green-500 text-white px-6 py-3 rounded font-semibold w-full hover:bg-green-600">
+    </button>
+  </section>
+
+  <!-- Success Section -->
+  <section id="successSection"
+    class="hidden p-8 max-w-3xl mx-auto bg-white rounded shadow mt-6 text-gray-800 text-center">
+    <h2 class="text-2xl font-bold mb-6 text-green-600">✅ Payment Successful!</h2>
+    <p class="mb-4">Your booking is confirmed.</p>
+    <p><span class="font-semibold">Movie:</span> <span id="successMovie"></span></p>
+    <p><span class="font-semibold">Seat(s):</span> <span id="successSeats"></span></p>
+    <p><span class="font-semibold">Amount:</span> <span id="successAmount"></span></p>
+  </section>
+
+  <script>
+    // Retrieve data
+    const selectedMovie = localStorage.getItem("selectedMovie") || [];
+    const selectedSeats = JSON.parse(localStorage.getItem("selectedSeats")) || [];
+    const seatPrice = parseInt(localStorage.getItem("seatPrice")) || 250;
+    const selectedAmount = selectedSeats.length * seatPrice;
+
+    // Populate values
+    document.getElementById("movieName").textContent = selectedMovie;
+    document.getElementById("seatNumbers").textContent = selectedSeats.join(", ");
+    document.getElementById("amountValue").textContent = `₹${selectedAmount}`;
+    document.getElementById("payBtn").textContent = `Pay Now ₹${selectedAmount}`;
+
+    // Payment simulation
+    document.getElementById("payBtn").addEventListener("click", () => {
+      document.getElementById("payBtn").innerText = "Processing...";
+      setTimeout(() => {
+        // Hide payment section, show success section
+        document.getElementById("paymentSection").classList.add("hidden");
+        document.getElementById("successSection").classList.remove("hidden");
+
+        // Fill success details
+        document.getElementById("successMovie").textContent = selectedMovie;
+        document.getElementById("successSeats").textContent = selectedSeats.join(", ");
+        document.getElementById("successAmount").textContent = `₹${selectedAmount}`;
+
+        // Generate receipt
+        const receiptText = `
+🎬 Cinema Booking Receipt
+Movie: ${selectedMovie}
+Seats: ${selectedSeats.join(", ")}
+Amount Paid: ₹${selectedAmount}
+Status: Payment Successful ✅
+        `;
+        const blob = new Blob([receiptText], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+
+        // Add download button dynamically
+        const downloadBtn = document.createElement("a");
+        downloadBtn.href = url;
+        downloadBtn.download = "receipt.txt";
+        downloadBtn.textContent = "Download Receipt";
+        downloadBtn.className = "mt-6 inline-block bg-purple-500 text-white px-6 py-3 rounded font-semibold hover:bg-purple-600 shadow-lg";
+        document.getElementById("successSection").appendChild(downloadBtn);
+      }, 2000);
+    });
+  </script>
+</body>
+</html>

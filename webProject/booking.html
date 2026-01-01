@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seat Selection</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .seat {
+      width: 40px;
+      height: 40px;
+      margin: 5px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .available { background-color: #e5e7eb; }   /* gray */
+    .selected { background-color: #22c55e; }    /* green */
+    .booked   { background-color: #ef4444; cursor: not-allowed; } /* red */
+  </style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <!-- Navigation -->
+  <nav class="bg-gray-900 text-white px-6 py-4 flex items-center justify-between">
+    <div class="text-2xl font-bold text-yellow-400">🎬 Cinema Booking</div>
+    <a href="home1.html" class="hover:text-yellow-400">Back to Home</a>
+  </nav>
+
+  <!-- Seat Selection -->
+  <section class="p-8 max-w-4xl mx-auto bg-white rounded shadow">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Select Your Seat</h2>
+
+    <!-- Movie Info -->
+    <div class="mb-6">
+      <p class="text-lg font-semibold">Movie: <span id="movieName"></span></p>
+    </div>
+
+    <!-- Seat Grid -->
+    <div id="seat-grid" class="grid grid-cols-8 gap-2 justify-center"></div>
+
+    <!-- Proceed Button -->
+    <div class="mt-8 text-center">
+      <button onclick="proceedToPayment()" 
+              class="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 font-semibold">
+        Proceed to Payment
+      </button>
+    </div>
+  </section>
+
+  <script>
+    // Get movie name from localStorage (set from home page)
+    const movieName = localStorage.getItem("selectedMovie") || "Unknown";
+    document.getElementById("movieName").textContent = movieName;
+
+    const seatGrid = document.getElementById("seat-grid");
+    const rows = 5, cols = 8;
+    const bookedSeats = ["A3", "B5", "C2", "D7"]; // Example booked seats
+    let selectedSeats = [];
+
+    // Generate seats
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const seatId = String.fromCharCode(65 + r) + (c + 1);
+        const seat = document.createElement("div");
+        seat.innerText = seatId;
+        seat.classList.add("seat");
+
+        if (bookedSeats.includes(seatId)) {
+          seat.classList.add("booked");
+        } else {
+          seat.classList.add("available");
+          seat.addEventListener("click", () => {
+            if (seat.classList.contains("selected")) {
+              seat.classList.remove("selected");
+              seat.classList.add("available");
+              selectedSeats = selectedSeats.filter(s => s !== seatId);
+            } else {
+              seat.classList.remove("available");
+              seat.classList.add("selected");
+              selectedSeats.push(seatId);
+            }
+          });
+        }
+        seatGrid.appendChild(seat);
+      }
+    }
+
+    function proceedToPayment() {
+      if (selectedSeats.length === 0) {
+        alert("No seats selected!");
+        return;
+      }
+      alert("Booking successful for seats: " + selectedSeats.join(", "));
+      localStorage.setItem("selectedSeats", JSON.stringify(selectedSeats));
+      localStorage.setItem("seatPrice", 250); // Price per seat
+      window.location.href = "payment.html";
+    }
+  </script>
+</body>
+</html>
